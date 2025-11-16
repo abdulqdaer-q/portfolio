@@ -32,8 +32,14 @@ function Collectible({ position, id, emoji, onCollect }: CollectibleProps) {
 
   return (
     <group position={position}>
-      <mesh ref={meshRef} onClick={handleClick} castShadow>
-        <sphereGeometry args={[0.5, 32, 32]} />
+      <mesh
+        ref={meshRef}
+        onClick={handleClick}
+        castShadow
+        onPointerOver={() => (document.body.style.cursor = 'pointer')}
+        onPointerOut={() => (document.body.style.cursor = 'auto')}
+      >
+        <sphereGeometry args={[0.5, 16, 16]} />
         <meshStandardMaterial
           color="#fbbf24"
           emissive="#fbbf24"
@@ -50,7 +56,7 @@ function Collectible({ position, id, emoji, onCollect }: CollectibleProps) {
 
       {/* Glow ring */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]}>
-        <ringGeometry args={[0.6, 0.8, 32]} />
+        <ringGeometry args={[0.6, 0.8, 16]} />
         <meshStandardMaterial
           color="#fbbf24"
           emissive="#fbbf24"

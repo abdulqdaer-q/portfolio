@@ -1,17 +1,21 @@
-import { useRef } from 'react'
-import { Mesh, Group } from 'three'
+import { useRef, useState, useMemo } from 'react'
+import { Mesh, Group, Vector3 } from 'three'
 import { useFrame } from '@react-three/fiber'
+import { Text } from '@react-three/drei'
 
 interface PortalProps {
   position: [number, number, number]
   sectionId: string
   color: string
+  label: string
   onEnter: (sectionId: string) => void
+  playerPosition: Vector3
 }
 
-function Portal({ position, sectionId, color, onEnter }: PortalProps) {
+function Portal({ position, sectionId, color, label, onEnter, playerPosition }: PortalProps) {
   const meshRef = useRef<Mesh>(null)
   const ringRef = useRef<Mesh>(null)
+  const [isNear, setIsNear] = useState(false)
 
   useFrame(() => {
     if (meshRef.current) {
@@ -20,30 +24,75 @@ function Portal({ position, sectionId, color, onEnter }: PortalProps) {
     if (ringRef.current) {
       ringRef.current.rotation.z -= 0.02
     }
+
+    // Check proximity to player
+    const distance = playerPosition.distanceTo(
+      new Vector3(position[0], position[1], position[2])
+    )
+    setIsNear(distance < 5)
   })
+
+  const handleClick = () => {
+    onEnter(sectionId)
+  }
+
+  // Shared geometry to improve performance
+  const torusGeometry = useMemo(() => [2, 0.1, 16, 50], [])
+  const circleGeometry = useMemo(() => [2, 32], [])
 
   return (
     <group position={position}>
       {/* Outer ring */}
-      <mesh ref={ringRef} rotation={[0, 0, 0]} onClick={() => onEnter(sectionId)}>
-        <torusGeometry args={[2, 0.1, 16, 100]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
-      </mesh>
-
-      {/* Inner portal */}
-      <mesh ref={meshRef} rotation={[0, 0, 0]} onClick={() => onEnter(sectionId)}>
-        <circleGeometry args={[2, 64]} />
+      <mesh
+        ref={ringRef}
+        rotation={[0, 0, 0]}
+        onClick={handleClick}
+        onPointerOver={() => (document.body.style.cursor = 'pointer')}
+        onPointerOut={() => (document.body.style.cursor = 'auto')}
+      >
+        <torusGeometry args={torusGeometry as any} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1}
-          transparent
-          opacity={0.3}
+          emissiveIntensity={isNear ? 3 : 2}
         />
       </mesh>
 
-      {/* Particles around portal */}
+      {/* Inner portal */}
+      <mesh
+        ref={meshRef}
+        rotation={[0, 0, 0]}
+        onClick={handleClick}
+        onPointerOver={() => (document.body.style.cursor = 'pointer')}
+        onPointerOut={() => (document.body.style.cursor = 'auto')}
+      >
+        <circleGeometry args={circleGeometry as any} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={isNear ? 1.5 : 1}
+          transparent
+          opacity={isNear ? 0.5 : 0.3}
+        />
+      </mesh>
+
+      {/* Reduced particles for performance */}
       <ParticleRing color={color} radius={2.2} />
+
+      {/* Show label when near */}
+      {isNear && (
+        <Text
+          position={[0, -2, 0]}
+          fontSize={0.4}
+          color="#ffffff"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.02}
+          outlineColor={color}
+        >
+          Click to visit {label}
+        </Text>
+      )}
     </group>
   )
 }
@@ -57,38 +106,66 @@ function ParticleRing({ color, radius }: { color: string; radius: number }) {
     }
   })
 
+  // Reduced from 12 to 6 particles for performance
+  const particlePositions = useMemo(() => {
+    return Array.from({ length: 6 }).map((_, i) => {
+      const angle = (i / 6) * Math.PI * 2
+      return [Math.cos(angle) * radius, Math.sin(angle) * radius, 0] as [number, number, number]
+    })
+  }, [radius])
+
   return (
     <group ref={particles}>
-      {Array.from({ length: 12 }).map((_, i) => {
-        const angle = (i / 12) * Math.PI * 2
-        return (
-          <mesh key={i} position={[Math.cos(angle) * radius, Math.sin(angle) * radius, 0]}>
-            <sphereGeometry args={[0.1, 16, 16]} />
-            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
-          </mesh>
-        )
-      })}
+      {particlePositions.map((pos, i) => (
+        <mesh key={i} position={pos}>
+          <sphereGeometry args={[0.1, 8, 8]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
+        </mesh>
+      ))}
     </group>
   )
 }
 
-export function PortalSections({ onEnterPortal }: { onEnterPortal: (sectionId: string) => void }) {
+interface PortalSectionsProps {
+  onEnterPortal: (sectionId: string) => void
+  playerPosition: Vector3
+}
+
+export function PortalSections({ onEnterPortal, playerPosition }: PortalSectionsProps) {
   return (
     <>
       <Portal
         position={[-15, 3, -10]}
         sectionId="experience"
+        label="Experience"
         color="#3b82f6"
         onEnter={onEnterPortal}
+        playerPosition={playerPosition}
       />
-      <Portal position={[15, 3, -10]} sectionId="skills" color="#8b5cf6" onEnter={onEnterPortal} />
+      <Portal
+        position={[15, 3, -10]}
+        sectionId="skills"
+        label="Skills"
+        color="#8b5cf6"
+        onEnter={onEnterPortal}
+        playerPosition={playerPosition}
+      />
       <Portal
         position={[-15, 3, 10]}
         sectionId="education"
+        label="Education"
         color="#10b981"
         onEnter={onEnterPortal}
+        playerPosition={playerPosition}
       />
-      <Portal position={[15, 3, 10]} sectionId="contact" color="#f59e0b" onEnter={onEnterPortal} />
+      <Portal
+        position={[15, 3, 10]}
+        sectionId="contact"
+        label="Contact"
+        color="#f59e0b"
+        onEnter={onEnterPortal}
+        playerPosition={playerPosition}
+      />
     </>
   )
 }

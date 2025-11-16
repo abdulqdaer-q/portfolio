@@ -43,7 +43,7 @@ export function World({ onCollectItem, onEnterPortal, onPlayerPositionChange }: 
           <Buildings />
 
           {/* Interactive Elements */}
-          <PortalSections onEnterPortal={onEnterPortal} />
+          <PortalSections onEnterPortal={onEnterPortal} playerPosition={playerPosition} />
           <Collectibles onCollect={onCollectItem} />
 
           {/* Player */}
