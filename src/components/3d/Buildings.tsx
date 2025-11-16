@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { Mesh } from 'three'
 import { useFrame } from '@react-three/fiber'
-import { RoundedBox, Text3D, Center } from '@react-three/drei'
+import { RoundedBox, Text, Center } from '@react-three/drei'
 
 export function Buildings() {
   return (
@@ -54,10 +54,16 @@ function CentralTower() {
 
       {/* AQ Logo */}
       <Center position={[0, 16, 0]}>
-        <Text3D font="/fonts/helvetiker_regular.typeface.json" size={0.8} height={0.2}>
+        <Text
+          fontSize={1}
+          color="#ffffff"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.05}
+          outlineColor="#3b82f6"
+        >
           &lt;AQ/&gt;
-          <meshStandardMaterial color="#ffffff" emissive="#3b82f6" emissiveIntensity={1} />
-        </Text3D>
+        </Text>
       </Center>
     </group>
   )
@@ -101,10 +107,16 @@ function SectionBuilding({
 
       {/* Label */}
       <Center position={[0, 6, 0]}>
-        <Text3D font="/fonts/helvetiker_regular.typeface.json" size={0.4} height={0.1}>
+        <Text
+          fontSize={0.5}
+          color="#ffffff"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.03}
+          outlineColor={color}
+        >
           {label}
-          <meshStandardMaterial color="#ffffff" emissive={color} emissiveIntensity={0.5} />
-        </Text3D>
+        </Text>
       </Center>
 
       {/* Portal effect */}
