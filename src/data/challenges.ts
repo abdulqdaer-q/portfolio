@@ -2,60 +2,40 @@ import type { Challenge } from '@/types/game'
 
 export const challenges: Challenge[] = [
   {
-    id: 'reverse-string',
-    title: 'Reverse a String',
-    description: 'Write a function that reverses a string',
+    id: 'memory-match',
+    title: 'Memory Match',
+    description: 'Match all the pairs of cards',
     difficulty: 'easy',
-    xp: 50,
+    xp: 75,
     completed: false,
-    type: 'code',
-    code: `function reverseString(str: string): string {
-  // Your code here
-
-}`,
-    expectedOutput: 'olleh',
+    type: 'puzzle',
   },
   {
-    id: 'fibonacci',
-    title: 'Fibonacci Sequence',
-    description: 'Generate the first n Fibonacci numbers',
+    id: 'color-pattern',
+    title: 'Color Pattern',
+    description: 'Remember and repeat the color sequence',
     difficulty: 'medium',
     xp: 100,
     completed: false,
-    type: 'code',
-    code: `function fibonacci(n: number): number[] {
-  // Your code here
-
-}`,
-    expectedOutput: '[0, 1, 1, 2, 3, 5, 8, 13]',
+    type: 'puzzle',
   },
   {
-    id: 'palindrome',
-    title: 'Palindrome Checker',
-    description: 'Check if a string is a palindrome',
+    id: 'treasure-hunt',
+    title: 'Treasure Hunt',
+    description: 'Find all hidden treasures in the 3D world',
     difficulty: 'easy',
-    xp: 50,
-    completed: false,
-    type: 'code',
-    code: `function isPalindrome(str: string): boolean {
-  // Your code here
-
-}`,
-    expectedOutput: 'true',
-  },
-  {
-    id: 'two-sum',
-    title: 'Two Sum',
-    description: 'Find two numbers that add up to a target',
-    difficulty: 'medium',
     xp: 100,
     completed: false,
-    type: 'code',
-    code: `function twoSum(nums: number[], target: number): number[] {
-  // Your code here
-
-}`,
-    expectedOutput: '[0, 1]',
+    type: 'puzzle',
+  },
+  {
+    id: 'sliding-puzzle',
+    title: 'Sliding Puzzle',
+    description: 'Solve the sliding tile puzzle',
+    difficulty: 'medium',
+    xp: 125,
+    completed: false,
+    type: 'puzzle',
   },
   {
     id: 'typing-test',
@@ -67,9 +47,9 @@ export const challenges: Challenge[] = [
     type: 'typing',
   },
   {
-    id: 'tech-quiz',
-    title: 'Technology Quiz',
-    description: 'Answer questions about modern web development',
+    id: 'trivia-quiz',
+    title: 'Trivia Quiz',
+    description: 'Answer fun general knowledge questions',
     difficulty: 'easy',
     xp: 50,
     completed: false,

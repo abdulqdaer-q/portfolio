@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Code, X, Trophy, Zap, Target } from 'lucide-react'
+import { Gamepad2, X, Trophy, Zap } from 'lucide-react'
 import type { Challenge } from '@/types/game'
+import { TypingGame } from './TypingGame'
+import { MemoryMatchGame } from './MemoryMatchGame'
+import { ColorPatternGame } from './ColorPatternGame'
+import { SlidingPuzzleGame } from './SlidingPuzzleGame'
+import { TriviaQuizGame } from './TriviaQuizGame'
 
 interface ChallengesPanelProps {
   challenges: Challenge[]
@@ -30,7 +35,7 @@ export function ChallengesPanel({ challenges, onComplete }: ChallengesPanelProps
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 right-6 z-40 w-16 h-16 bg-gradient-to-br from-primary-500 to-purple-600 rounded-full shadow-2xl flex items-center justify-center group hover:shadow-primary-500/50"
       >
-        <Code className="w-8 h-8 text-white group-hover:rotate-12 transition-transform" />
+        <Gamepad2 className="w-8 h-8 text-white group-hover:rotate-12 transition-transform" />
         {completedCount < challenges.length && (
           <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold text-white animate-pulse">
             {challenges.length - completedCount}
@@ -61,10 +66,10 @@ export function ChallengesPanel({ challenges, onComplete }: ChallengesPanelProps
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-primary-500/20 rounded-lg">
-                      <Code className="w-6 h-6 text-primary-400" />
+                      <Gamepad2 className="w-6 h-6 text-primary-400" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-white">Code Challenges</h2>
+                      <h2 className="text-2xl font-bold text-white">Mini Games</h2>
                       <p className="text-sm text-gray-400">
                         {completedCount}/{challenges.length} completed
                       </p>
@@ -154,30 +159,28 @@ interface ChallengeModalProps {
 }
 
 function ChallengeModal({ challenge, onClose, onComplete }: ChallengeModalProps) {
-  const [code, setCode] = useState(challenge.code || '')
-  const [output, setOutput] = useState('')
-  const [isRunning, setIsRunning] = useState(false)
-
-  const runCode = () => {
-    setIsRunning(true)
-    setTimeout(() => {
-      try {
-        // This is a simplified code runner
-        // In production, you'd want to use a proper code execution sandbox
-        const result = eval(code + '\n; reverseString("hello")')
-        setOutput(String(result))
-
-        if (String(result) === challenge.expectedOutput) {
-          setTimeout(() => {
-            onComplete()
-          }, 1000)
+  const renderGame = () => {
+    switch (challenge.type) {
+      case 'typing':
+        return <TypingGame onComplete={() => onComplete()} />
+      case 'puzzle':
+        if (challenge.id === 'memory-match') {
+          return <MemoryMatchGame onComplete={onComplete} />
+        } else if (challenge.id === 'color-pattern') {
+          return <ColorPatternGame onComplete={onComplete} />
+        } else if (challenge.id === 'sliding-puzzle') {
+          return <SlidingPuzzleGame onComplete={onComplete} />
         }
-      } catch (error) {
-        setOutput(`Error: ${(error as Error).message}`)
-      } finally {
-        setIsRunning(false)
-      }
-    }, 500)
+        return <MemoryMatchGame onComplete={onComplete} />
+      case 'quiz':
+        return <TriviaQuizGame onComplete={() => onComplete()} />
+      default:
+        return (
+          <div className="text-center text-gray-400 p-8">
+            Game type not yet implemented
+          </div>
+        )
+    }
   }
 
   return (
@@ -193,7 +196,7 @@ function ChallengeModal({ challenge, onClose, onComplete }: ChallengeModalProps)
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-dark-900 rounded-xl border border-primary-500/30 max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+        className="bg-dark-900 rounded-xl border border-primary-500/30 max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
       >
         {/* Header */}
         <div className="p-6 border-b border-dark-700">
@@ -211,40 +214,8 @@ function ChallengeModal({ challenge, onClose, onComplete }: ChallengeModalProps)
           </div>
         </div>
 
-        {/* Code Editor */}
-        <div className="flex-1 overflow-y-auto p-6">
-          <textarea
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="w-full h-64 bg-dark-800 text-white font-mono text-sm p-4 rounded-lg border border-dark-700 focus:border-primary-500 outline-none resize-none"
-            spellCheck={false}
-          />
-
-          {/* Output */}
-          {output && (
-            <div className="mt-4 p-4 bg-dark-800 rounded-lg border border-dark-700">
-              <div className="text-sm text-gray-400 mb-2">Output:</div>
-              <pre className="text-white font-mono text-sm">{output}</pre>
-            </div>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="p-6 border-t border-dark-700 flex justify-between items-center">
-          <div className="flex items-center gap-2 text-gray-400">
-            <Target className="w-5 h-5" />
-            <span className="text-sm">
-              Expected: <code className="text-primary-400">{challenge.expectedOutput}</code>
-            </span>
-          </div>
-          <button
-            onClick={runCode}
-            disabled={isRunning}
-            className="px-6 py-3 bg-primary-500 hover:bg-primary-600 disabled:bg-dark-700 text-white font-bold rounded-lg transition-colors"
-          >
-            {isRunning ? 'Running...' : 'Run Code'}
-          </button>
-        </div>
+        {/* Game Content */}
+        <div className="flex-1 overflow-y-auto p-6">{renderGame()}</div>
       </motion.div>
     </motion.div>
   )

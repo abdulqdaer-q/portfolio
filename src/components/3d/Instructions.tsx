@@ -41,32 +41,36 @@ export function Instructions() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Mouse Controls */}
+              {/* Keyboard Controls */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2 mb-3">
-                  <Mouse className="w-5 h-5 text-primary-400" />
-                  <h3 className="font-bold text-white">Mouse Controls</h3>
+                  <Keyboard className="w-5 h-5 text-primary-400" />
+                  <h3 className="font-bold text-white">Keyboard Controls</h3>
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Rotate View:</span>
-                    <span className="text-white font-mono">Drag</span>
+                    <span className="text-gray-400">Move Forward:</span>
+                    <span className="text-white font-mono">W / ↑</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Zoom:</span>
-                    <span className="text-white font-mono">Scroll</span>
+                    <span className="text-gray-400">Move Back:</span>
+                    <span className="text-white font-mono">S / ↓</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Interact:</span>
-                    <span className="text-white font-mono">Click</span>
+                    <span className="text-gray-400">Move Left:</span>
+                    <span className="text-white font-mono">A / ←</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Move Right:</span>
+                    <span className="text-white font-mono">D / →</span>
                   </div>
                 </div>
               </div>
 
-              {/* Objectives */}
+              {/* Mouse Controls & Objectives */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2 mb-3">
-                  <Keyboard className="w-5 h-5 text-primary-400" />
+                  <Mouse className="w-5 h-5 text-primary-400" />
                   <h3 className="font-bold text-white">Objectives</h3>
                 </div>
                 <div className="space-y-2 text-sm">
@@ -76,11 +80,15 @@ export function Instructions() {
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-purple-400">🔮</span>
-                    <span className="text-gray-300">Enter portals to sections</span>
+                    <span className="text-gray-300">Click portals to sections</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-pink-400">💎</span>
                     <span className="text-gray-300">Find secret collectibles</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-green-400">🎮</span>
+                    <span className="text-gray-300">Play mini-games</span>
                   </div>
                 </div>
               </div>
@@ -88,7 +96,7 @@ export function Instructions() {
 
             <div className="mt-4 p-3 bg-primary-500/10 border border-primary-500/30 rounded-lg">
               <p className="text-sm text-primary-300 text-center">
-                💡 Tip: Use the minimap to navigate and find collectibles!
+                💡 Tip: Use WASD to move around and explore the 3D world!
               </p>
             </div>
           </div>

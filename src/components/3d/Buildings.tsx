@@ -12,7 +12,7 @@ export function Buildings() {
       {/* Section buildings */}
       <SectionBuilding position={[-15, 0, -10]} label="EXPERIENCE" color="#3b82f6" />
       <SectionBuilding position={[15, 0, -10]} label="SKILLS" color="#8b5cf6" />
-      <SectionBuilding position={[-15, 0, 10]} label="PROJECTS" color="#10b981" />
+      <SectionBuilding position={[-15, 0, 10]} label="EDUCATION" color="#10b981" />
       <SectionBuilding position={[15, 0, 10]} label="CONTACT" color="#f59e0b" />
 
       {/* Decorative buildings */}
