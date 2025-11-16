@@ -8,9 +8,10 @@ interface TypingGameProps {
 
 const sampleTexts = [
   'The quick brown fox jumps over the lazy dog',
-  'TypeScript is a strongly typed programming language that builds on JavaScript',
-  'React makes it painless to create interactive UIs',
-  'Gamification is the application of game-design elements',
+  'Practice makes perfect when learning new skills',
+  'Adventure awaits those who dare to explore',
+  'Success comes to those who never give up',
+  'Every journey begins with a single step',
 ]
 
 export function TypingGame({ onComplete }: TypingGameProps) {

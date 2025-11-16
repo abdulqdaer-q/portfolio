@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { Mesh } from 'three'
 import { useFrame } from '@react-three/fiber'
-import { RoundedBox, Text3D, Center } from '@react-three/drei'
+import { RoundedBox, Text, Center } from '@react-three/drei'
 
 export function Buildings() {
   return (
@@ -12,7 +12,7 @@ export function Buildings() {
       {/* Section buildings */}
       <SectionBuilding position={[-15, 0, -10]} label="EXPERIENCE" color="#3b82f6" />
       <SectionBuilding position={[15, 0, -10]} label="SKILLS" color="#8b5cf6" />
-      <SectionBuilding position={[-15, 0, 10]} label="PROJECTS" color="#10b981" />
+      <SectionBuilding position={[-15, 0, 10]} label="EDUCATION" color="#10b981" />
       <SectionBuilding position={[15, 0, 10]} label="CONTACT" color="#f59e0b" />
 
       {/* Decorative buildings */}
@@ -35,12 +35,12 @@ function CentralTower() {
 
   return (
     <group position={[0, 0, 0]}>
-      <mesh ref={meshRef} castShadow receiveShadow position={[0, 7.5, 0]}>
+      <mesh ref={meshRef} castShadow position={[0, 7.5, 0]}>
         <cylinderGeometry args={[3, 4, 15, 8]} />
         <meshStandardMaterial
           color="#1e3a8a"
-          metalness={0.8}
-          roughness={0.2}
+          metalness={0.6}
+          roughness={0.4}
           emissive="#3b82f6"
           emissiveIntensity={0.2}
         />
@@ -48,16 +48,22 @@ function CentralTower() {
 
       {/* Glowing ring at top */}
       <mesh position={[0, 15, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[3.5, 0.2, 16, 100]} />
+        <torusGeometry args={[3.5, 0.2, 8, 50]} />
         <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={2} />
       </mesh>
 
       {/* AQ Logo */}
       <Center position={[0, 16, 0]}>
-        <Text3D font="/fonts/helvetiker_regular.typeface.json" size={0.8} height={0.2}>
+        <Text
+          fontSize={1}
+          color="#ffffff"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.05}
+          outlineColor="#3b82f6"
+        >
           &lt;AQ/&gt;
-          <meshStandardMaterial color="#ffffff" emissive="#3b82f6" emissiveIntensity={1} />
-        </Text3D>
+        </Text>
       </Center>
     </group>
   )
@@ -88,34 +94,39 @@ function SectionBuilding({
         radius={0.2}
         smoothness={4}
         castShadow
-        receiveShadow
       >
         <meshStandardMaterial
           color={color}
-          metalness={0.6}
-          roughness={0.4}
+          metalness={0.4}
+          roughness={0.6}
           emissive={color}
-          emissiveIntensity={0.3}
+          emissiveIntensity={0.2}
         />
       </RoundedBox>
 
       {/* Label */}
       <Center position={[0, 6, 0]}>
-        <Text3D font="/fonts/helvetiker_regular.typeface.json" size={0.4} height={0.1}>
+        <Text
+          fontSize={0.5}
+          color="#ffffff"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.03}
+          outlineColor={color}
+        >
           {label}
-          <meshStandardMaterial color="#ffffff" emissive={color} emissiveIntensity={0.5} />
-        </Text3D>
+        </Text>
       </Center>
 
       {/* Portal effect */}
       <mesh position={[0, 0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[2, 2.5, 32]} />
+        <ringGeometry args={[2, 2.5, 16]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1}
+          emissiveIntensity={0.8}
           transparent
-          opacity={0.5}
+          opacity={0.4}
         />
       </mesh>
     </group>
@@ -130,14 +141,14 @@ function DecorativeBuilding({
   height: number
 }) {
   return (
-    <mesh position={[position[0], height / 2, position[2]]} castShadow receiveShadow>
+    <mesh position={[position[0], height / 2, position[2]]} castShadow>
       <boxGeometry args={[3, height, 3]} />
       <meshStandardMaterial
         color="#1a1f3a"
-        metalness={0.5}
-        roughness={0.5}
+        metalness={0.3}
+        roughness={0.7}
         emissive="#3b82f6"
-        emissiveIntensity={0.1}
+        emissiveIntensity={0.05}
       />
     </mesh>
   )

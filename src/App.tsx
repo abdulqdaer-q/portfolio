@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Vector3 } from 'three'
 import { useScrollspy } from '@/hooks/useScrollspy'
 import { useGameState } from '@/hooks/useGameState'
 import { useSectionTracker } from '@/hooks/useSectionTracker'
@@ -47,6 +48,7 @@ function App() {
   const [showParticles, setShowParticles] = useState(false)
   const [particleEmoji, setParticleEmoji] = useState('✨')
   const [socialLinksClicked, setSocialLinksClicked] = useState(new Set<string>())
+  const [playerPosition, setPlayerPosition] = useState(new Vector3(0, 0.5, 8))
   const [collectibles, setCollectibles] = useState([
     { id: 'xp-1', position: [-10, 1, -5], collected: false },
     { id: 'xp-2', position: [10, 1, -5], collected: false },
@@ -104,17 +106,35 @@ function App() {
     }
   }, [gameState.stats.visitCount, unlockAchievement])
 
-  // Code master achievement
+  // Game master achievement
   useEffect(() => {
-    const codeChallenge = gameState.challenges.filter(
-      (c) => c.type === 'code' && c.completed
-    ).length
-    const totalCodeChallenges = gameState.challenges.filter((c) => c.type === 'code').length
+    const completedChallenges = gameState.challenges.filter((c) => c.completed).length
+    const totalChallenges = gameState.challenges.length
 
-    if (codeChallenge === totalCodeChallenges && totalCodeChallenges > 0) {
-      unlockAchievement('code-master')
+    if (completedChallenges === totalChallenges && totalChallenges > 0) {
+      unlockAchievement('game-master')
     }
   }, [gameState.challenges, unlockAchievement])
+
+  // Puzzle solver achievement
+  useEffect(() => {
+    const completedPuzzles = gameState.challenges.filter(
+      (c) => c.type === 'puzzle' && c.completed
+    ).length
+    const totalPuzzles = gameState.challenges.filter((c) => c.type === 'puzzle').length
+
+    if (completedPuzzles === totalPuzzles && totalPuzzles > 0) {
+      unlockAchievement('puzzle-solver')
+    }
+  }, [gameState.challenges, unlockAchievement])
+
+  // Explorer achievement (when player moves)
+  useEffect(() => {
+    const distance = Math.sqrt(playerPosition.x ** 2 + playerPosition.z ** 2)
+    if (distance > 10) {
+      unlockAchievement('explorer')
+    }
+  }, [playerPosition, unlockAchievement])
 
   // Easter eggs
   useEasterEggs({
@@ -199,6 +219,10 @@ function App() {
     addXP(25)
   }
 
+  const handlePlayerPositionChange = (position: Vector3) => {
+    setPlayerPosition(position)
+  }
+
   return (
     <div className="min-h-screen bg-dark-950 text-white">
       {/* 3D World */}
@@ -211,9 +235,16 @@ function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <World onCollectItem={handleCollectItem} onEnterPortal={handleEnterPortal} />
+            <World
+              onCollectItem={handleCollectItem}
+              onEnterPortal={handleEnterPortal}
+              onPlayerPositionChange={handlePlayerPositionChange}
+            />
             <Instructions />
-            <Minimap playerPosition={{ x: 0, z: 8 }} collectibles={collectibles} />
+            <Minimap
+              playerPosition={{ x: playerPosition.x, z: playerPosition.z }}
+              collectibles={collectibles}
+            />
           </motion.div>
         )}
       </AnimatePresence>
