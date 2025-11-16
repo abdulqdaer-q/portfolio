@@ -160,26 +160,40 @@ interface ChallengeModalProps {
 
 function ChallengeModal({ challenge, onClose, onComplete }: ChallengeModalProps) {
   const renderGame = () => {
-    switch (challenge.type) {
-      case 'typing':
-        return <TypingGame onComplete={() => onComplete()} />
-      case 'puzzle':
-        if (challenge.id === 'memory-match') {
-          return <MemoryMatchGame onComplete={onComplete} />
-        } else if (challenge.id === 'color-pattern') {
-          return <ColorPatternGame onComplete={onComplete} />
-        } else if (challenge.id === 'sliding-puzzle') {
-          return <SlidingPuzzleGame onComplete={onComplete} />
-        }
+    switch (challenge.id) {
+      case 'memory-match':
         return <MemoryMatchGame onComplete={onComplete} />
-      case 'quiz':
-        return <TriviaQuizGame onComplete={() => onComplete()} />
-      default:
+      case 'color-pattern':
+        return <ColorPatternGame onComplete={onComplete} />
+      case 'treasure-hunt':
         return (
-          <div className="text-center text-gray-400 p-8">
-            Game type not yet implemented
+          <div className="text-center space-y-4">
+            <div className="text-6xl mb-4">🗺️</div>
+            <h3 className="text-2xl font-bold text-white">Treasure Hunt</h3>
+            <p className="text-gray-300">
+              Explore the 3D world and collect all the hidden treasures!
+            </p>
+            <div className="bg-primary-500/10 border border-primary-500/30 rounded-lg p-4">
+              <p className="text-primary-300">
+                Switch to 3D mode and find all the collectibles marked with emojis like 🎮 🏆 💎 🔮
+              </p>
+            </div>
+            <button
+              onClick={onComplete}
+              className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-bold rounded-lg transition-colors"
+            >
+              Got it! Let's hunt!
+            </button>
           </div>
         )
+      case 'sliding-puzzle':
+        return <SlidingPuzzleGame onComplete={onComplete} />
+      case 'typing-test':
+        return <TypingGame onComplete={() => onComplete()} />
+      case 'trivia-quiz':
+        return <TriviaQuizGame onComplete={() => onComplete()} />
+      default:
+        return <MemoryMatchGame onComplete={onComplete} />
     }
   }
 

@@ -35,12 +35,12 @@ function CentralTower() {
 
   return (
     <group position={[0, 0, 0]}>
-      <mesh ref={meshRef} castShadow receiveShadow position={[0, 7.5, 0]}>
+      <mesh ref={meshRef} castShadow position={[0, 7.5, 0]}>
         <cylinderGeometry args={[3, 4, 15, 8]} />
         <meshStandardMaterial
           color="#1e3a8a"
-          metalness={0.8}
-          roughness={0.2}
+          metalness={0.6}
+          roughness={0.4}
           emissive="#3b82f6"
           emissiveIntensity={0.2}
         />
@@ -48,7 +48,7 @@ function CentralTower() {
 
       {/* Glowing ring at top */}
       <mesh position={[0, 15, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[3.5, 0.2, 16, 100]} />
+        <torusGeometry args={[3.5, 0.2, 8, 50]} />
         <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={2} />
       </mesh>
 
@@ -94,14 +94,13 @@ function SectionBuilding({
         radius={0.2}
         smoothness={4}
         castShadow
-        receiveShadow
       >
         <meshStandardMaterial
           color={color}
-          metalness={0.6}
-          roughness={0.4}
+          metalness={0.4}
+          roughness={0.6}
           emissive={color}
-          emissiveIntensity={0.3}
+          emissiveIntensity={0.2}
         />
       </RoundedBox>
 
@@ -121,13 +120,13 @@ function SectionBuilding({
 
       {/* Portal effect */}
       <mesh position={[0, 0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[2, 2.5, 32]} />
+        <ringGeometry args={[2, 2.5, 16]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1}
+          emissiveIntensity={0.8}
           transparent
-          opacity={0.5}
+          opacity={0.4}
         />
       </mesh>
     </group>
@@ -142,14 +141,14 @@ function DecorativeBuilding({
   height: number
 }) {
   return (
-    <mesh position={[position[0], height / 2, position[2]]} castShadow receiveShadow>
+    <mesh position={[position[0], height / 2, position[2]]} castShadow>
       <boxGeometry args={[3, height, 3]} />
       <meshStandardMaterial
         color="#1a1f3a"
-        metalness={0.5}
-        roughness={0.5}
+        metalness={0.3}
+        roughness={0.7}
         emissive="#3b82f6"
-        emissiveIntensity={0.1}
+        emissiveIntensity={0.05}
       />
     </mesh>
   )
