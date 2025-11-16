@@ -53,11 +53,7 @@ export function Experience() {
 
           <div className="space-y-12">
             {portfolioData.experience.map((exp, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="relative pl-8 sm:pl-20"
-              >
+              <motion.div key={index} variants={itemVariants} className="relative pl-8 sm:pl-20">
                 {/* Timeline Dot */}
                 <div className="absolute left-0 sm:left-6 top-2 w-4 h-4 rounded-full bg-primary-500 border-4 border-dark-900 shadow-lg shadow-primary-500/50" />
 
@@ -78,9 +74,7 @@ export function Experience() {
                       {exp.roles.map((role, roleIndex) => (
                         <div key={roleIndex} className="border-l-2 border-primary-500/30 pl-4">
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                            <h4 className="text-lg font-semibold text-primary-400">
-                              {role.title}
-                            </h4>
+                            <h4 className="text-lg font-semibold text-primary-400">{role.title}</h4>
                             <span className="text-sm text-gray-400 font-mono">{role.period}</span>
                           </div>
                           {role.achievements.length > 0 && (

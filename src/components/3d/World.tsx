@@ -24,12 +24,7 @@ export function World({ onCollectItem, onEnterPortal }: WorldProps) {
           <Lighting />
 
           {/* Sky */}
-          <Sky
-            distance={450000}
-            sunPosition={[100, 20, 100]}
-            inclination={0.6}
-            azimuth={0.25}
-          />
+          <Sky distance={450000} sunPosition={[100, 20, 100]} inclination={0.6} azimuth={0.25} />
           <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
 
           {/* Environment */}

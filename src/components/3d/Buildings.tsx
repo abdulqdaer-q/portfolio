@@ -49,26 +49,14 @@ function CentralTower() {
       {/* Glowing ring at top */}
       <mesh position={[0, 15, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[3.5, 0.2, 16, 100]} />
-        <meshStandardMaterial
-          color="#3b82f6"
-          emissive="#3b82f6"
-          emissiveIntensity={2}
-        />
+        <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={2} />
       </mesh>
 
       {/* AQ Logo */}
       <Center position={[0, 16, 0]}>
-        <Text3D
-          font="/fonts/helvetiker_regular.typeface.json"
-          size={0.8}
-          height={0.2}
-        >
+        <Text3D font="/fonts/helvetiker_regular.typeface.json" size={0.8} height={0.2}>
           &lt;AQ/&gt;
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#3b82f6"
-            emissiveIntensity={1}
-          />
+          <meshStandardMaterial color="#ffffff" emissive="#3b82f6" emissiveIntensity={1} />
         </Text3D>
       </Center>
     </group>
@@ -113,17 +101,9 @@ function SectionBuilding({
 
       {/* Label */}
       <Center position={[0, 6, 0]}>
-        <Text3D
-          font="/fonts/helvetiker_regular.typeface.json"
-          size={0.4}
-          height={0.1}
-        >
+        <Text3D font="/fonts/helvetiker_regular.typeface.json" size={0.4} height={0.1}>
           {label}
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive={color}
-            emissiveIntensity={0.5}
-          />
+          <meshStandardMaterial color="#ffffff" emissive={color} emissiveIntensity={0.5} />
         </Text3D>
       </Center>
 

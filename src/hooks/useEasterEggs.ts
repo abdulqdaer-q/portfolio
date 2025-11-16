@@ -66,7 +66,8 @@ export function useEasterEggs({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(window as any).portfolio = {
       help: () => {
-        console.log(`
+        console.log(
+          `
 %c🎮 Portfolio Console Commands 🎮
 %c
 Commands:
@@ -94,10 +95,7 @@ Built with ❤️ by AbdulQader Qassab
         }
       },
       cheat: () => {
-        console.log(
-          '%c↑ ↑ ↓ ↓ ← → ← → B A',
-          'color: #f59e0b; font-size: 20px; font-weight: bold'
-        )
+        console.log('%c↑ ↑ ↓ ↓ ← → ← → B A', 'color: #f59e0b; font-size: 20px; font-weight: bold')
       },
       reset: () => {
         if (confirm('Are you sure you want to reset all game progress?')) {

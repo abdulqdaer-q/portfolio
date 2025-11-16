@@ -44,13 +44,7 @@ function Collectible({ position, id, emoji, onCollect }: CollectibleProps) {
       </mesh>
 
       {/* Emoji label */}
-      <Text
-        position={[0, 1, 0]}
-        fontSize={0.8}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-      >
+      <Text position={[0, 1, 0]} fontSize={0.8} color="white" anchorX="center" anchorY="middle">
         {emoji}
       </Text>
 

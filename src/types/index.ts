@@ -47,4 +47,11 @@ export interface PortfolioData {
   education: Education
 }
 
-export type SectionId = 'home' | 'about' | 'experience' | 'skills' | 'education' | 'achievements' | 'contact'
+export type SectionId =
+  | 'home'
+  | 'about'
+  | 'experience'
+  | 'skills'
+  | 'education'
+  | 'achievements'
+  | 'contact'

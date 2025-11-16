@@ -25,25 +25,13 @@ function Portal({ position, sectionId, color, onEnter }: PortalProps) {
   return (
     <group position={position}>
       {/* Outer ring */}
-      <mesh
-        ref={ringRef}
-        rotation={[0, 0, 0]}
-        onClick={() => onEnter(sectionId)}
-      >
+      <mesh ref={ringRef} rotation={[0, 0, 0]} onClick={() => onEnter(sectionId)}>
         <torusGeometry args={[2, 0.1, 16, 100]} />
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={2}
-        />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
       </mesh>
 
       {/* Inner portal */}
-      <mesh
-        ref={meshRef}
-        rotation={[0, 0, 0]}
-        onClick={() => onEnter(sectionId)}
-      >
+      <mesh ref={meshRef} rotation={[0, 0, 0]} onClick={() => onEnter(sectionId)}>
         <circleGeometry args={[2, 64]} />
         <meshStandardMaterial
           color={color}
@@ -74,20 +62,9 @@ function ParticleRing({ color, radius }: { color: string; radius: number }) {
       {Array.from({ length: 12 }).map((_, i) => {
         const angle = (i / 12) * Math.PI * 2
         return (
-          <mesh
-            key={i}
-            position={[
-              Math.cos(angle) * radius,
-              Math.sin(angle) * radius,
-              0,
-            ]}
-          >
+          <mesh key={i} position={[Math.cos(angle) * radius, Math.sin(angle) * radius, 0]}>
             <sphereGeometry args={[0.1, 16, 16]} />
-            <meshStandardMaterial
-              color={color}
-              emissive={color}
-              emissiveIntensity={2}
-            />
+            <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
           </mesh>
         )
       })}
@@ -104,24 +81,14 @@ export function PortalSections({ onEnterPortal }: { onEnterPortal: (sectionId: s
         color="#3b82f6"
         onEnter={onEnterPortal}
       />
-      <Portal
-        position={[15, 3, -10]}
-        sectionId="skills"
-        color="#8b5cf6"
-        onEnter={onEnterPortal}
-      />
+      <Portal position={[15, 3, -10]} sectionId="skills" color="#8b5cf6" onEnter={onEnterPortal} />
       <Portal
         position={[-15, 3, 10]}
         sectionId="education"
         color="#10b981"
         onEnter={onEnterPortal}
       />
-      <Portal
-        position={[15, 3, 10]}
-        sectionId="contact"
-        color="#f59e0b"
-        onEnter={onEnterPortal}
-      />
+      <Portal position={[15, 3, 10]} sectionId="contact" color="#f59e0b" onEnter={onEnterPortal} />
     </>
   )
 }

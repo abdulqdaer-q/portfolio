@@ -28,19 +28,21 @@ import { Instructions } from '@/components/3d/Instructions'
 
 import type { SectionId } from '@/types'
 
-const sections: SectionId[] = ['home', 'experience', 'skills', 'education', 'achievements', 'contact']
+const sections: SectionId[] = [
+  'home',
+  'experience',
+  'skills',
+  'education',
+  'achievements',
+  'contact',
+]
 
 function App() {
   const { is3DMode } = use3DMode()
   const activeSection = useScrollspy(sections, 150)
   const visitedSections = useSectionTracker(sections)
-  const {
-    gameState,
-    recentAchievement,
-    unlockAchievement,
-    completeChallenge,
-    addXP,
-  } = useGameState()
+  const { gameState, recentAchievement, unlockAchievement, completeChallenge, addXP } =
+    useGameState()
 
   const [showParticles, setShowParticles] = useState(false)
   const [particleEmoji, setParticleEmoji] = useState('✨')
@@ -139,7 +141,12 @@ function App() {
     const handleSocialClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       const link = target.closest('a')
-      if (link && (link.href.includes('linkedin') || link.href.includes('mailto') || link.href.includes('icpc'))) {
+      if (
+        link &&
+        (link.href.includes('linkedin') ||
+          link.href.includes('mailto') ||
+          link.href.includes('icpc'))
+      ) {
         const href = link.href
         setSocialLinksClicked((prev) => new Set(prev).add(href))
       }
@@ -241,14 +248,8 @@ function App() {
       {/* Game Elements (Always visible) */}
       <ModeToggle />
       <GameHUD stats={gameState.stats} />
-      <AchievementNotification
-        achievement={recentAchievement}
-        onClose={() => {}}
-      />
-      <ChallengesPanel
-        challenges={gameState.challenges}
-        onComplete={completeChallenge}
-      />
+      <AchievementNotification achievement={recentAchievement} onClose={() => {}} />
+      <ChallengesPanel challenges={gameState.challenges} onComplete={completeChallenge} />
       <ParticleEffect trigger={showParticles} emoji={particleEmoji} />
     </div>
   )
