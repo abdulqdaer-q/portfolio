@@ -13,7 +13,7 @@ function Portal({ position, sectionId, color, onEnter }: PortalProps) {
   const meshRef = useRef<Mesh>(null)
   const ringRef = useRef<Mesh>(null)
 
-  useFrame((state) => {
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.z += 0.01
     }
@@ -63,7 +63,7 @@ function Portal({ position, sectionId, color, onEnter }: PortalProps) {
 function ParticleRing({ color, radius }: { color: string; radius: number }) {
   const particles = useRef<Mesh>(null)
 
-  useFrame((state) => {
+  useFrame(() => {
     if (particles.current) {
       particles.current.rotation.z += 0.005
     }

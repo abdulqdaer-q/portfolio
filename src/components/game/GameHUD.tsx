@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, Target, Star, TrendingUp, X, Award, Code, Gamepad2 } from 'lucide-react'
+import { Trophy, Target, Star, TrendingUp, X, Code, Gamepad2 } from 'lucide-react'
 import type { GameStats } from '@/types/game'
 
 interface GameHUDProps {

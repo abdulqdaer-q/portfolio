@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Briefcase, MapPin } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import { portfolioData } from '@/data/portfolio'
 
 const containerVariants = {

@@ -45,7 +45,6 @@ function App() {
   const [showParticles, setShowParticles] = useState(false)
   const [particleEmoji, setParticleEmoji] = useState('✨')
   const [socialLinksClicked, setSocialLinksClicked] = useState(new Set<string>())
-  const [playerPosition, setPlayerPosition] = useState({ x: 0, z: 8 })
   const [collectibles, setCollectibles] = useState([
     { id: 'xp-1', position: [-10, 1, -5], collected: false },
     { id: 'xp-2', position: [10, 1, -5], collected: false },
@@ -207,7 +206,7 @@ function App() {
           >
             <World onCollectItem={handleCollectItem} onEnterPortal={handleEnterPortal} />
             <Instructions />
-            <Minimap playerPosition={playerPosition} collectibles={collectibles} />
+            <Minimap playerPosition={{ x: 0, z: 8 }} collectibles={collectibles} />
           </motion.div>
         )}
       </AnimatePresence>

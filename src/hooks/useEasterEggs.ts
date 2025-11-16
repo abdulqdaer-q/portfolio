@@ -63,6 +63,7 @@ export function useEasterEggs({
   // Setup console commands
   const setupConsoleCommands = useCallback(() => {
     // Add custom console commands
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(window as any).portfolio = {
       help: () => {
         console.log(`

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import type { GameState, Achievement, Challenge } from '@/types/game'
+import type { GameState, Achievement } from '@/types/game'
 import { achievements as initialAchievements } from '@/data/achievements'
 import { challenges as initialChallenges } from '@/data/challenges'
 

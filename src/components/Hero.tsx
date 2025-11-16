@@ -1,23 +1,6 @@
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Trophy } from 'lucide-react'
+import { Linkedin, Mail, Trophy } from 'lucide-react'
 import { portfolioData } from '@/data/portfolio'
-
-const codeSnippet = `const engineer: Engineer = {
-  name: "${portfolioData.name}",
-  role: "Software Development Engineer",
-  company: "noon",
-  location: "Dubai, UAE",
-  experience: 4,
-  specialties: [
-    "TypeScript",
-    "Node.js",
-    "React.js",
-    "Python",
-    "GCP",
-    "Azure"
-  ],
-  passion: "Problem Solving"
-};`
 
 const containerVariants = {
   hidden: { opacity: 0 },

@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { Mesh } from 'three'
-import { useFrame } from '@react-three/fiber'
 import { MeshReflectorMaterial } from '@react-three/drei'
 
 export function Ground() {
