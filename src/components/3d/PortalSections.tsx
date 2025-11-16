@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Mesh } from 'three'
+import { Mesh, Group } from 'three'
 import { useFrame } from '@react-three/fiber'
 
 interface PortalProps {
@@ -61,7 +61,7 @@ function Portal({ position, sectionId, color, onEnter }: PortalProps) {
 }
 
 function ParticleRing({ color, radius }: { color: string; radius: number }) {
-  const particles = useRef<Mesh>(null)
+  const particles = useRef<Group>(null)
 
   useFrame(() => {
     if (particles.current) {

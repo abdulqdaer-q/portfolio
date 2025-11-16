@@ -26,6 +26,7 @@ export function Ground() {
           maxDepthThreshold={1.4}
           color="#050505"
           metalness={0.5}
+          mirror={0}
         />
       </mesh>
 
