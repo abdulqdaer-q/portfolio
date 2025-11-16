@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useScrollspy } from '@/hooks/useScrollspy'
 import { useGameState } from '@/hooks/useGameState'
 import { useSectionTracker } from '@/hooks/useSectionTracker'
 import { useEasterEggs } from '@/hooks/useEasterEggs'
+import { use3DMode } from '@/hooks/use3DMode'
 
 import { Navbar } from '@/components/Navbar'
 import { Hero } from '@/components/Hero'
@@ -19,11 +21,17 @@ import { AchievementNotification } from '@/components/game/AchievementNotificati
 import { ChallengesPanel } from '@/components/game/ChallengesPanel'
 import { ParticleEffect } from '@/components/game/ParticleEffect'
 
+import { World } from '@/components/3d/World'
+import { ModeToggle } from '@/components/3d/ModeToggle'
+import { Minimap } from '@/components/3d/Minimap'
+import { Instructions } from '@/components/3d/Instructions'
+
 import type { SectionId } from '@/types'
 
 const sections: SectionId[] = ['home', 'experience', 'skills', 'education', 'achievements', 'contact']
 
 function App() {
+  const { is3DMode } = use3DMode()
   const activeSection = useScrollspy(sections, 150)
   const visitedSections = useSectionTracker(sections)
   const {
@@ -37,6 +45,17 @@ function App() {
   const [showParticles, setShowParticles] = useState(false)
   const [particleEmoji, setParticleEmoji] = useState('✨')
   const [socialLinksClicked, setSocialLinksClicked] = useState(new Set<string>())
+  const [playerPosition, setPlayerPosition] = useState({ x: 0, z: 8 })
+  const [collectibles, setCollectibles] = useState([
+    { id: 'xp-1', position: [-10, 1, -5], collected: false },
+    { id: 'xp-2', position: [10, 1, -5], collected: false },
+    { id: 'xp-3', position: [-10, 1, 5], collected: false },
+    { id: 'xp-4', position: [10, 1, 5], collected: false },
+    { id: 'secret-1', position: [-20, 1, -15], collected: false },
+    { id: 'secret-2', position: [20, 1, -15], collected: false },
+    { id: 'secret-3', position: [-20, 1, 15], collected: false },
+    { id: 'secret-4', position: [20, 1, 15], collected: false },
+  ] as Array<{ id: string; position: [number, number, number]; collected: boolean }>)
 
   // First visit achievement
   useEffect(() => {
@@ -54,14 +73,12 @@ function App() {
 
   // Time-based achievements
   useEffect(() => {
-    // Speed reader (less than 2 minutes)
     const speedReaderTimer = setTimeout(() => {
       if (gameState.stats.timeSpent < 120) {
         unlockAchievement('speed-reader')
       }
     }, 120000)
 
-    // Dedicated visitor (more than 10 minutes)
     const dedicatedVisitorTimer = setTimeout(() => {
       unlockAchievement('dedicated-visitor')
     }, 600000)
@@ -149,23 +166,81 @@ function App() {
     }
   }, [recentAchievement])
 
+  // 3D World handlers
+  const handleCollectItem = (itemId: string) => {
+    setCollectibles((prev) =>
+      prev.map((item) => (item.id === itemId ? { ...item, collected: true } : item))
+    )
+
+    if (itemId.startsWith('xp-')) {
+      addXP(50)
+    } else if (itemId.startsWith('secret-')) {
+      addXP(100)
+      unlockAchievement('secret-hunter')
+    }
+
+    setParticleEmoji('✨')
+    setShowParticles(true)
+    setTimeout(() => setShowParticles(false), 100)
+  }
+
+  const handleEnterPortal = (sectionId: string) => {
+    // Scroll to section in 2D mode
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+    addXP(25)
+  }
+
   return (
     <div className="min-h-screen bg-dark-950 text-white">
-      <ScrollProgress />
-      <Navbar activeSection={activeSection} />
+      {/* 3D World */}
+      <AnimatePresence mode="wait">
+        {is3DMode && (
+          <motion.div
+            key="3d-world"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <World onCollectItem={handleCollectItem} onEnterPortal={handleEnterPortal} />
+            <Instructions />
+            <Minimap playerPosition={playerPosition} collectibles={collectibles} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <main>
-        <Hero />
-        <Experience />
-        <Skills />
-        <Education />
-        <Achievements />
-        <Contact />
-      </main>
+      {/* 2D Portfolio */}
+      <AnimatePresence mode="wait">
+        {!is3DMode && (
+          <motion.div
+            key="2d-portfolio"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <ScrollProgress />
+            <Navbar activeSection={activeSection} />
 
-      <Footer />
+            <main>
+              <Hero />
+              <Experience />
+              <Skills />
+              <Education />
+              <Achievements />
+              <Contact />
+            </main>
 
-      {/* Game Elements */}
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Game Elements (Always visible) */}
+      <ModeToggle />
       <GameHUD stats={gameState.stats} />
       <AchievementNotification
         achievement={recentAchievement}
