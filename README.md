@@ -9,6 +9,8 @@ A modern, professional portfolio website built with cutting-edge technologies.
 - **Build Tool:** Vite
 - **Styling:** Tailwind CSS
 - **Animations:** Framer Motion
+- **3D Graphics:** Three.js, React Three Fiber, @react-three/drei
+- **State Management:** Zustand
 - **Icons:** Lucide React
 - **Code Quality:** ESLint, Prettier
 - **Deployment:** Docker, GitHub Actions
@@ -18,6 +20,8 @@ A modern, professional portfolio website built with cutting-edge technologies.
 - ⚡ Lightning-fast performance with Vite
 - 🎨 Modern UI with Tailwind CSS
 - 🌊 Smooth animations with Framer Motion
+- 🌍 **3D Open World Experience** with Three.js
+- 🎮 Dual-mode portfolio (2D traditional + 3D interactive)
 - 📱 Fully responsive design
 - 🔍 SEO optimized
 - ♿ Accessibility compliant
@@ -25,6 +29,47 @@ A modern, professional portfolio website built with cutting-edge technologies.
 - 🚀 CI/CD pipeline with GitHub Actions
 - 📊 Type-safe with TypeScript
 - 🎯 Component-based architecture
+
+## 🌍 3D Open World Experience
+
+Click the **"3D World"** button to enter an immersive 3D environment!
+
+### 3D World Features
+
+**Interactive Environment:**
+- Cyberpunk-themed world with reflective floors and neon grid
+- Central tower hub with glowing <AQ/> branding
+- 4 section buildings representing portfolio categories
+- Realistic lighting (ambient, directional, point, hemisphere)
+- Dynamic sky with stars and atmospheric effects
+
+**Exploration & Interaction:**
+- **Orbital Controls:** Drag to rotate, scroll to zoom, click to interact
+- **8 Collectibles:** Find floating XP orbs (⭐) and secret items (🎮💎🔮🏆)
+- **Portal System:** Click glowing portals to navigate sections
+- **Minimap:** Track your position and locate collectibles
+- **Player Character:** Animated avatar with smooth bobbing effects
+
+**Visual Effects:**
+- Reflective materials with metalness and roughness
+- Emissive glowing elements (portals, collectibles, buildings)
+- Real-time shadows and lighting
+- Particle rings around portals
+- Smooth animations (rotating, floating, pulsing)
+
+**Gamification Integration:**
+- **50 XP** per XP orb collected
+- **100 XP** per secret item collected
+- **25 XP** per portal interaction
+- Unlock **"Secret Hunter"** achievement by finding all secrets
+- Particle effects on collection
+- Progress tracked in real-time
+
+**Controls:**
+- **Mouse Drag:** Rotate camera view
+- **Mouse Scroll:** Zoom in/out
+- **Click:** Collect items or enter portals
+- **Mode Toggle:** Switch between 2D and 3D anytime
 
 ## 🎮 Gamification Features
 
